@@ -1,6 +1,9 @@
 
-const handlRegister = (req,res, db , bcrypt)=>{
+const handlRegister = (db, bcrypt)=> (req,res)=>{
   const {name, password, email} = req.body;
+  if (!name || !password || !email) {
+    return res.status(400).json('incorrect form submission')
+  }
   const hash = bcrypt.hashSync(password);
     db.transaction(trx => {
       trx.insert({
@@ -13,8 +16,8 @@ const handlRegister = (req,res, db , bcrypt)=>{
           return trx('users')
           .returning('*')
           .insert({
-            email: loginEmail[0],
-            name: name,
+            email: loginEmail[0].toLowerCase(),
+            name: name.toLowerCase(),
             joined: new Date()
           })
           .then(user => {

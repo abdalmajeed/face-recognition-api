@@ -1,5 +1,5 @@
 
-const handleProfileGet = (req,res,db)=>{
+const handleProfileGet = (db)=> (req,res)=> {
   const id = Number(req.params.id)
   let found = false;
   db.select('*').from('users').where({id}).then(user=> {

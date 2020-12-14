@@ -29,18 +29,18 @@ app.use(cors());
 
 
 //root 
-app.get('/', (req,res)=>{ res.send(database.users); })
-
-
+app.get('/', (req,res)=> res.json('Welcome to server API'))
 // Signin API
-app.post('/signin', (req,res)=>{ signin.handleSignin(req, res, db, bcrypt); })
-
+app.post('/signin', signin.handleSignin(db, bcrypt))
 // Register API
-app.post('/register', (req, res)=>{ register.handlRegister(req, res, db, bcrypt) })
+app.post('/register', register.handlRegister(db, bcrypt) )
 // Profile API
-app.get('/profile/:id', (req,res)=>{ profile.handleProfileGet(req, res, db)})
+app.get('/profile/:id', profile.handleProfileGet(db))
 // image rank
-app.put('/image', (req, res)=>{ image.handleImage(req, res, db)})
+app.put('/image', image.handleImage(db))
+// image api call
+app.post('/imageurl', (req, res)=> {image.handleApiCall(req, res)})
+
     
 
 app.listen(3000);
